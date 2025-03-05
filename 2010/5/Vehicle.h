@@ -3,13 +3,13 @@
 
 class Vehicle {
 public:
-	Vehicle(int speed = 0) : speedNum(speed) {}
-	~Vehicle() {}
-	int getSpeed() const { return speedNum; }
-	void setSpeed(int speed) { speedNum = speed; }
+  Vehicle(int speed = 0) : speedNum(speed) {}
+  virtual ~Vehicle() {}
+  int getSpeed() const { return speedNum; }
+  void setSpeed(int speed) { speedNum = speed; }
+
 private:
-	int speedNum;
+  int speedNum;
 };
 
 #endif // !_VEHICLE_H_
-

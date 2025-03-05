@@ -1,54 +1,58 @@
-﻿#include <iostream>
+﻿#include <bits/stdc++.h>
 using namespace std;
 
-// 插入排序思想见 https://www.cnblogs.com/southernEast/p/12713540.html
-
+void swap(int &a, int &b) {
+  int temp = a;
+  a = b;
+  b = temp;
+}
 
 // 迭代插入排序
-template<typename T>
-void insertSort(T a[], int n) {
-    for (int i = 1; i < n; ++i) {
-        int j;
-        T num = a[i];      // 取当前位置的待插入的数
+template <typename T> void insert_sort(vector<T> &arr) {
+  int n = arr.size();
 
-        // 往有序数列中插入num
-        for (j = i; j > 0 && a[j - 1] > num; --j) {
-            a[j] = a[j - 1];
-        }
-        a[j] = num;
+  for (int i = 1; i < n; i++) {
+    for (int j = i - 1; j >= 0 && arr[j] > arr[j + 1]; j--) {
+      swap(arr[j], arr[j + 1]);
     }
+  }
 }
 
 // 递归插入排序
-template<typename T>
-void insertSortRecursive(T a[], int i) {
-    if (i > 0) {
-        insertSortRecursive(a, i - 1);  // 先把当前位置之前的数排列成有序序列
+template <typename T> void insert_recursive(vector<T> &arr, int i, int n) {
+  if (i == n)
+    return;
 
-        // 插入排序中的一趟排序
-        int j;
-        T num = a[i];
-        for (j = i; j > 0 && a[j - 1] > num; --j) {
-            a[j] = a[j - 1];
-        }
-        a[j] = num;
-    }
+  for (int j = i - 1; j >= 0 && arr[j] > arr[j + 1]; j--) {
+    swap(arr[j], arr[j + 1]);
+  }
+
+  // 递归处理下一个元素
+  insert_recursive(arr, i + 1, n);
 }
 
 int main() {
-    const int SIZE = 15;
-    int a[SIZE];
-    for (int i = 0; i < SIZE; ++i) {
-        a[i] = rand() % SIZE;
-        cout << a[i] << " ";
-    }
-    cout << endl;
 
-    insertSort(a, SIZE);
-    //insertSortRecursive(a, SIZE - 1);
+  // 递推
+  vector<int> arr(20);
+  for (int i = 0; i < 20; ++i) {
+    arr[i] = rand() % 100;
+  }
+  insert_sort<int>(arr);
 
-    for (auto elem : a)
-        cout << elem << " ";
+  for (auto elem : arr)
+    cout << elem << " ";
+  puts("");
 
-    return 0;
+  // 递归
+  for (int i = 0; i < 20; ++i) {
+    arr[i] = rand() % 100;
+  }
+
+  insert_recursive(arr, 0, arr.size());
+
+  for (auto elem : arr)
+    cout << elem << " ";
+
+  return 0;
 }

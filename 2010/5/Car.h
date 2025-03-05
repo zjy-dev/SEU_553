@@ -1,28 +1,28 @@
 #ifndef _CAR_H_
 #define _CAR_H_
 
-#include "Vehicle.h"
 #include "Brake.h"
 #include "SteeringWheel.h"
+#include "Vehicle.h"
 #include <iostream>
 
-class Car : public Vehicle{	// ³µÁ¾ºÍÆû³µÎª¡°ÊÇÒ»¸ö¡±µÄ¹ØÏµ£¬¹ÊÊ¹ÓÃ¼Ì³Ð
+class Car : public Vehicle { // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½Ä¹ï¿½Ïµï¿½ï¿½ï¿½ï¿½Ê¹ï¿½Ã¼Ì³ï¿½
 public:
-	Car(std::string brakeName, std::string steeringWheelName, int speed)
-		: Vehicle(speed) {
-		b.setName(brakeName);
-		s.setName(steeringWheelName);
-	}
-	~Car() {}
-	void showInfo() const {
-		std::cout << "Brake Name: " << b.getName() << std::endl;
-		std::cout << "Steering Wheel: " << s.getName() << std::endl;
-		std::cout << "Speed: " << getSpeed() << std::endl;
-	}
+  Car(std::string brakeName, std::string steeringWheelName, int speed)
+      : Vehicle(speed) {
+    b.setName(brakeName);
+    s.setName(steeringWheelName);
+  }
+  ~Car() {}
+  void showInfo() const {
+    std::cout << "Brake Name: " << b.getName() << std::endl;
+    std::cout << "Steering Wheel: " << s.getName() << std::endl;
+    std::cout << "Speed: " << getSpeed() << std::endl;
+  }
+
 private:
-	Brake b;			// É²³µÏµÍ³ºÍ·½ÏòÅÌÎª¡°ÓÐÒ»¸ö¡±µÄ¹ØÏµ£¬¹ÊÊ¹ÓÃ×éºÏ
-	SteeringWheel s;
+  Brake b; // É²ï¿½ï¿½ÏµÍ³ï¿½Í·ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½Ä¹ï¿½Ïµï¿½ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½ï¿½ï¿½ï¿½
+  SteeringWheel s;
 };
 
 #endif // !_CAR_H_
-
