@@ -3,7 +3,7 @@ using namespace std;
 
 int main() {
   // 打开流
-  ofstream outFile("data.txt", ios::app);
+  ofstream ofs("data.txt", ios::app);
 
   // 显然 ofstream 是 ostream 的子类
 
@@ -16,10 +16,10 @@ int main() {
       val >>= 1;
     }
 
-    outFile << s << endl;
+    ofs << s << endl;
   }
 
   // 关闭流
-  outFile.close();
+  ofs.close();
   return 0;
 }

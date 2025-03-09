@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// 敲定每一个运算符究竟如何重载
 class MyInt {
 private:
   int value;
@@ -13,6 +14,8 @@ public:
   int getValue() const { return value; }
 
   // 重载算术运算符
+  // 能 const 就 const
+  // 效率??? 如果 MyInt 是一个大对象
   MyInt operator+(const MyInt &other) const {
     return MyInt(value + other.value);
   }
@@ -45,9 +48,10 @@ public:
     return *this;
   } // 前置++
 
+  // 告诉编译器
   MyInt operator++(int) {
     MyInt old = *this;
-    ++value;
+    ++this->value;
     return old;
   } // 后置++
 
@@ -69,6 +73,7 @@ public:
     value = other.value;
 
     // 深拷贝
+    // new
     // strcpy(this->arr, other.arr);
 
     return *this;
@@ -102,6 +107,7 @@ public:
   }
 
   // 重载比较运算符
+  // 最水, 但是喜欢考
   bool operator==(const MyInt &other) const { return value == other.value; }
   bool operator!=(const MyInt &other) const { return value != other.value; }
   bool operator<(const MyInt &other) const { return value < other.value; }
@@ -165,6 +171,7 @@ public:
   // 重载输入运算符（友元函数）
   friend std::istream &operator>>(std::istream &is, MyInt &obj) {
     is >> obj.value;
+
     return is;
   }
 };
