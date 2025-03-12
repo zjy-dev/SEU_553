@@ -2,21 +2,30 @@
 using namespace std;
 
 int main() {
+  const int n = rand() % 100;
+  int *arr = new int[n];
+  for (int i = 0; i < n; i++)
+    arr[i] = rand() % 1000;
+
   // 打开流
-  ofstream ofs("data.txt", ios::app);
+  // append: 追加
+  // trunc: 摧毁重建
+  ofstream ofs("data.txt", ios::trunc);
 
   // 显然 ofstream 是 ostream 的子类
 
-  for (int i = 1; i < 1000; i++) {
-    int val = i;
-    string s = "";
+  // 循环 n 个随机数
+  for (int i = 0; i < n; i++) {
+    int val = arr[i];
 
+    string temp("");
+    // 把 val 转换成二进制字符串并写入文件中
     while (val) {
-      s = char((val % 2) + '0') + s;
-      val >>= 1;
+      // 低位
+      temp = char('0' + (val % 2)) + temp;
+      val /= 2;
     }
-
-    ofs << s << endl;
+    ofs << arr[i] << "的二进制表示为: " << temp << endl;
   }
 
   // 关闭流

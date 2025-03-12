@@ -1,7 +1,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// 敲定每一个运算符究竟如何重载
+// 最终让 MyInt 有着和原生 int 一样的行为
+// 敲定每一个运算符究竟如何重载, 必考
 class MyInt {
 private:
   int value;
@@ -14,11 +15,12 @@ public:
   int getValue() const { return value; }
 
   // 重载算术运算符
-  // 能 const 就 const
+  // 能 const 就 const, const 是保护你的程序的
   // 效率??? 如果 MyInt 是一个大对象
   MyInt operator+(const MyInt &other) const {
     return MyInt(value + other.value);
   }
+
   MyInt operator-(const MyInt &other) const {
     return MyInt(value - other.value);
   }
@@ -50,7 +52,6 @@ public:
 
   // 告诉编译器
   MyInt operator++(int) {
-    cout << "调用了后置++" << endl;
     MyInt old = *this;
     ++this->value;
     return old;
@@ -70,6 +71,9 @@ public:
   // 深拷贝, 重载两个
   // ClassA other(a);
   // ClassA other = a;
+
+  // 在一个类里, 只要有一个地方你觉得需要深拷贝
+  // 大概率所有地方都要深拷贝!!!
   MyInt &operator=(const MyInt &other) {
     value = other.value;
 
@@ -80,6 +84,7 @@ public:
     return *this;
   }
 
+  // 效率差, 废内存, 如果 MyInt 很大
   MyInt &operator+=(const MyInt &other) {
     value += other.value;
     return *this;
@@ -157,11 +162,15 @@ public:
     return *this;
   }
 
-  // 底层的第一个参数是 MyInt *this
   MyInt &operator>>=(const MyInt &other) {
     value >>= other.value;
     return *this;
   }
+
+  // 几个参数?
+  // 看起来 0 个, 实际上是 1 个
+  // MyInt *this
+  void func() { ((cout << 1) << 2); }
 
   // 重载输出运算符（友元函数）
   friend std::ostream &operator<<(std::ostream &os, const MyInt &obj) {
@@ -175,14 +184,7 @@ public:
 
     return is;
   }
-
-  string operator()() {
-    cout << "我的别名是仿函数" << endl;
-    return "abc";
-  }
 };
-
-void f() {}
 
 // 主函数测试
 int main() {
