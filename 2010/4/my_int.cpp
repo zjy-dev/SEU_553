@@ -50,6 +50,7 @@ public:
 
   // 告诉编译器
   MyInt operator++(int) {
+    cout << "调用了后置++" << endl;
     MyInt old = *this;
     ++this->value;
     return old;
@@ -174,11 +175,27 @@ public:
 
     return is;
   }
+
+  string operator()() {
+    cout << "我的别名是仿函数" << endl;
+    return "abc";
+  }
 };
+
+void f() {}
 
 // 主函数测试
 int main() {
   MyInt a(5), b(3), c;
+
+  // cout << a(10, 5);
+
+  // 怎么让它报错
+  MyInt t = (a++)++;
+  (t++)++;
+
+  cout << t.getValue() << endl;
+  cout << a.getValue() << endl;
 
   // 测试算术运算符
   std::cout << "a + b = " << (a + b) << std::endl; // 8

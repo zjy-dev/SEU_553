@@ -1,24 +1,22 @@
-﻿#include <iostream>
-#include <cstring>
+﻿#include <cstring>
+#include <iostream>
 using namespace std;
 
 int main() {
-	char str[50] = { 0 };
-	cin.getline(str, 20);
+  char s[50] = "(025)87234865-987";
 
-	char* ptr;
-	ptr = strtok(str + 1, ")");		//  分割第一段
-	cout << ptr << " ";
-	ptr = strtok(nullptr, "-");		// 分割第二段
+  // char *strtok(char *str, const char *d)
+  // 它会把从 str 开始遇到的第一个 d 改成 '\0'
+  // 返回值是从 str 开始第一个指向的值不是 d 的指针, 一般就是 str
+  // 如果传 null 且字符串已经处理完毕了, 那就返回 nullptr
 
-	cout << ptr << " ";
-	ptr = strtok(nullptr, "");		// 分割第三段
-	cout << ptr;
-	/*
-	//或者使用这个方法
-	int len = strlen(ptr);
-	cout << ptr << " " << (ptr + len + 1);	// 第三段以'\0'结束，跨过当前段的'\0'即可输出
-	*/
+  cout << strtok(s + 1, ")") << ' '; // 025
+  // 当 str 传 nullptr 的时候, str 默认就是上一次调用的时候改成 \0
+  // 的区域后面的位置
+  cout << strtok(nullptr, "-") << ' '; // 87234865
 
-	return 0;
+  cout << strtok(nullptr, "\0") << ' '; // 987
+  // cout << strtok(nullptr, "");   // 987
+  cout << (strtok(nullptr, "") == nullptr); // 987
+  return 0;
 }

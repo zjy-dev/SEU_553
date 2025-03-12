@@ -4,6 +4,7 @@
 class Shape {
 public:
   virtual int calculate() = 0;
+  void func() {};
   virtual ~Shape() = default;
 };
 

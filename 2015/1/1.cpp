@@ -1,27 +1,30 @@
-﻿#include <iostream>
+﻿#include <cmath> //增加fabs头文件
 #include <iomanip>
+#include <iostream>
 using namespace std;
 
 double myExp(double x) {
-	const double acc = 10e-7;
-	double tem1, tem2, ans, n;
-	tem2 = 1;
-	n = tem1 = ans = 0;
+  double ans = 0, item = 1;
+  double fenmu = 1, old;
 
-	do {
-		ans += tem2;
-		tem1 = tem2;
-		tem2 *= x / (++n);
-	} while (tem2 > acc);		
-	/*
-	按题源应该是while(fabs(tem1 - tem2) <= acc)，但是这样计算精确度很低，偏差大
-	精度低的原因：试考虑取x=3，当n=3时，x^n/x! 与 x^(n-1)/(n-1)! 的值相同
-	*/
-	return ans;
+  do {
+    ans += item;
+    old = item;
+    item *= x / (fenmu++);
+  } while (fabs(old - item) > 10e-10);
+
+  return ans;
 }
 
 int main() {
-	cout << fixed << setprecision(10) << myExp(10) << endl;
+  double x = 1.5;
 
-	return 0;
+  //  这两个一起用就可以操纵小数点后 n 位了
+  // fixed: 接下来设置小数点后几位
+  // setprecision: 有效数字长度, 3.14(3位)
+
+  // 结合起来就是小数点后 n 位了
+  cout << fixed << setprecision(10) << myExp(x) << endl;
+
+  return 0;
 }

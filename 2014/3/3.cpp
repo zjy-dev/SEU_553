@@ -1,44 +1,57 @@
-﻿#include <iostream>
+﻿#include <bits/stdc++.h>
 using namespace std;
 
-//void myReverse(int* a, int* b) {	// 在本例中效果与库函数中的reverse()一样，在不能使用STL的情况下备用
-//	int temp;
-//	--b;	// 区间为[a,b)
-//	while (b > a) {			// 同一个数组中的两个指针可以比较
-//		temp = *a;
-//		*a = *b;
-//		*b = temp;
-//		++a;
-//		--b;
-//	}
-//}
+// [l, r]
+template <typename T> void my_swap(T &a, T &b) {
+  T t;
+  t = a, a = b, b = t;
+}
 
-/*
-STL中reverse(begin, end)的有效区间为[begin, end)
-注意最后一个元素不取
-*/
-void swap(int a[], int m, int n) {
-	//myReverse(a, a + m);		// 不使用STL的情况下使用
-	//myReverse(a + m, a + m + n);
-	//myReverse(a, a + m + n);
-	reverse(a, a + m);		// 前面m个元素翻转
-	reverse(a + m, a + m + n);	// 后面n个元素翻转
-	reverse(a, a + m + n);		// 整体翻转
+void my_reverse(int a[], size_t l, size_t r) {
+  while (l < r)
+    my_swap(a[l++], a[r--]);
+}
+
+void solve(int a[], int m, int n, int len) {
+  if (m + n > len)
+    return;
+  // a- -> b- -> c- -> ()-
+  // 调用了 stl, reverse(p1, p2)
+  // [p1, p2) 取逆
+  // |0 1| (2 3) |4 5 6 7 8 9|
+  my_reverse(a, 0, m - 1);         // a-
+  my_reverse(a, m, len - n - 1);   // b-
+  my_reverse(a, len - n, len - 1); // c-
+
+  my_reverse(a, 0, len - 1); // ()-
 }
 
 int main() {
-	int a[10];
-	cout << "Before swap: ";
-	for (int i = 0; i < 10; ++i) {
-		a[i] = rand() % 10;
-		cout << a[i] << " ";
-	}
-	cout << endl;
-	swap(a, 2, 8);
-	cout << "After swap:  ";
-	for (int elem : a) {
-		cout << elem << " ";
-	}
+  // |0 1| (2 3) |4 5 6 7 8 9|
+  // swap(arr, 2, 6)
+  // expected:
+  // |4 5 6 7 8 9| (2 3) |0 1|
+  // abc -> cba
+  // (ab)- = b-a-
+  // (a-b-c-)- = cba
 
-	return 0;
+  // a- -> b- -> c- -> ()-
+
+  // 初始化数组
+  int a[10];
+  cout << "Before swap: ";
+  for (int i = 0; i < 10; ++i) {
+    a[i] = i;
+    cout << a[i] << ' ';
+  }
+  cout << endl;
+
+  // swap
+  solve(a, 2, 6, 10);
+  cout << "After swap:  ";
+  for (int elem : a) {
+    cout << elem << " ";
+  }
+
+  return 0;
 }

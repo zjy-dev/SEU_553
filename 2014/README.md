@@ -14,6 +14,9 @@ void f(int *p) {
 int main()
 {
     int p = 10;
+
+    // 野指针, 它的指向没人知道
+    // in the wild
     int * ptr;
     f(ptr);
     
@@ -47,6 +50,9 @@ int main()
 ```
 
 ## 3. 程序输出结果
+
+去年考试第一/第二个读程序
+
 ```C++
 #include <iostream>
 using namespace std;
@@ -58,8 +64,13 @@ void fun(int i, int j, int *a) {
 int main()
 {
     int a, b, c;
+    // -11, @, @
     fun(20, 9, &a);
+
+    // -11, -20, @
     fun(9, a, &b);
+
+    // -11, -20, -9
     fun(a, b, &c);
     cout << a << "," << b << "," << c << endl;
 
@@ -78,6 +89,7 @@ using namespace std;
 class A
 {
 public:
+    // 多态
     virtual void print() {
         cout << "A::print" << endl;
     }
@@ -109,6 +121,9 @@ int main()
     a->print();
     a = &b;
     a->print();
+
+    B *pb = &c;
+    (*pb).print();
 
     return 0;
 }

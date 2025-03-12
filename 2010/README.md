@@ -36,9 +36,22 @@ p = a0 + a1*x + a2*x^2 + a3*x^3 + ……… + an*x^n
 ## [main函数](5/5.cpp)|[Brake.h](5/Brake.h)|[Car.h](5/Car.h)|[SteeringWheel.h](5/SteeringWheel.h)|[Vehicle.h](5/Vehicle.h)
 > 几个类(Vehicle 类 Car 类 SteeringWheel 类 Brake 类)有着必然的联系，设计类与实现
 > Vehicle类中需要有速度的成员及相关操作，Car类、teeringWheel类和Brake 类中需要有部分属性名字。
+
+```cpp
+class Car {
+private:
+    // 变长数组
+    // vector<StringWheel> v;
+    StringWheel *arr;
+    size_t wheel_num;
+    Brake b;
+};
+```
+
 ## Problem 6 
 ## [main函数](6/6.cpp)|[Shape.h](6/Shape.h)|[ThreeDShape.h](6/ThreeDShape.h)|[TwoDShape.h](6/TwoDShape.h)
 > 一个基类 Shape，在基类的基础上继承写一个二维图形类，再继承写一个三维图形类，设计与实现相关函数，并实践多态性。
+
 
 
 题目参考自：https://blog.csdn.net/qq_32925781/article/details/79377073

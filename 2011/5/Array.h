@@ -32,7 +32,9 @@ template <typename T> Array<T>::Array(int r, int c) {
   else
     ptr = new T[row * col]();
 }
+
 template <typename T> Array<T>::~Array() { delete[] ptr; }
+
 template <typename T> Array<T>::Array(const Array<T> &a) {
   row = a.row;
   col = a.col;
@@ -42,12 +44,14 @@ template <typename T> Array<T>::Array(const Array<T> &a) {
       *(ptr + i * col + j) = *(a.ptr + i * col + j);
   }
 }
+
 template <typename T> T &Array<T>::operator()(int r, int c) {
   if (r >= row || c >= col) {
     std::cerr << "Out of range" << std::endl;
     exit(EXIT_FAILURE);
   }
-  return *(ptr + r * col + c);
+
+  return ptr[r * col + c];
 }
 
 #endif // !_ARRAY_H_
