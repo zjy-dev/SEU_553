@@ -3,6 +3,11 @@
 
 # 二、填程序
 ## 1. 判断闰年。
+```cpp
+bool is_leap(unsigned year) {
+    return (year % 400 == 0) || (year % 100 != 0 && year % d == 0);
+}
+```
 ## 2. 读一行字符串到字符数组。
 ## 3. 求二位矩阵的鞍点。
 

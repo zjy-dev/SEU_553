@@ -4,7 +4,7 @@
 using namespace std;
 
 int main() {
-  ofstream out("table.dat", ios::out);
+  ofstream out("table.dat", ios::trunc);
   if (!out)
     return -1; // 文件打开失败
 
@@ -14,6 +14,7 @@ int main() {
     out << setw(6) << static_cast<char>(i) << setw(4) << dec << i << setw(4)
         << oct << i << setw(4) << hex << i << endl;
   }
+
   out.close();
 
   return 0;

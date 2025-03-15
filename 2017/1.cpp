@@ -1,32 +1,50 @@
-﻿#include <iostream>
-#include <iomanip>
-#include <fstream>
+﻿#include <bits/stdc++.h>
 using namespace std;
 
+unsigned str_to_int(const char *const s) {
+  unsigned ans = 0;
+  size_t len = strlen(s);
+
+  for (size_t i = 0; i < len; i++)
+    ans = (ans * 10) + (s[i] - '0');
+  // (ans *= 10) += (s[i] - '0');
+
+  return ans;
+}
+
 int main() {
-	ifstream input("Date.txt", ios::in);
-	if (!input) {
-		cerr << "The file can not be opened." << endl;
-		exit(EXIT_FAILURE);
-	}			// 文件处理操作
+  ifstream ifs("date.txt");
+  if (!ifs) {
+    cerr << "The file can not be opened." << endl;
+    exit(1);
+  }
 
-	int day, month, year;
-	const char* monthStr[] = {
-		"", "January", "February", "March", "April", "May", "June", "July",
-		"August", "September", "October", "November", "December"
-	};
-	while (input >> month) {	// 一直读取直到EOF
-		input.ignore();			// 忽略'/'
-		input >> day;
-		input.ignore();
-		input >> year;
-		input.ignore();
+  const char *month_map[] = {
+      "",     "January", "February",  "March",   "April",    "May",     "June",
+      "July", "August",  "September", "October", "November", "December"};
 
-		cout << monthStr[month] << " " << setw(2)	// 注意这个要填充字符0
-			<< setfill('0') << day << "," << year << endl;
-	}
+  string line;
+  while (getline(ifs, line)) {
+    char *s = new char[line.size() + 1];
+    strcpy(s, line.c_str());
+    s[line.size()] = '\0';
 
-	input.close();
+    char *month_str = strtok(s, "/");
+    char *day_str = strtok(nullptr, "/");
+    char *year_str = strtok(nullptr, "\0");
 
-	return 0;
+    unsigned month = str_to_int(month_str), day = str_to_int(day_str),
+             year = str_to_int(year_str);
+
+    // istringstream ss(line);
+    // unsigned day, month, year;
+    // ss >> month, ss.ignore();
+    // ss >> day, ss.ignore();
+    // ss >> year;
+
+    cout << month_map[month] << ' ' << day << "," << year << endl;
+  }
+  ifs.close();
+
+  return 0;
 }

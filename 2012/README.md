@@ -16,7 +16,7 @@ int main()
             continue;
         if (i % 5 == 0)
             break;
-        cout << "End of programming\n";
+        // cout << "End of programming\n";
     }
     cout << "End of programming\n";
     return 0;
@@ -72,6 +72,10 @@ int main()
 
 ## [Problem 1](1/1.cpp)
 > 编写程序，求最小公倍数。
+
+a * b / 最大公约数
+
+gcd(a, b) = b ? gcd(b, a % b) : a;
 
 ## [Problem 2](2/2.cpp)
 > 编写程序，计算一系列整数之和。</br>

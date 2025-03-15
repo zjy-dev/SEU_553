@@ -1,8 +1,8 @@
 ﻿#include <bits/stdc++.h>
 using namespace std;
 
-bool is_punctuation(char ch) { // 判断是否是需要转换的符号
-  return (ch == ',' || ch == '.' || ch == '!' || ch == '?');
+bool is_punctuation(char ch) {
+  return (ch == ',' || ch == '.' || ch == '!' || ch == '?' || ch == ' ');
 }
 
 // bool isupper();
@@ -24,8 +24,11 @@ void input() {
   // "string" -> any
   // idx = hash(输入) % n
 
-  // 按照 string 排序有序的哈希表
+  // 按照 key 升序排序的哈希表
   map<string, int> str_map;
+  // kv: key-value
+  // pair<string, int>
+  // pair.first, pair.second
 
   string s;
   // cin >> 跳过 ' ' \n
@@ -43,58 +46,40 @@ void input() {
     //   *it = tolower(*it);
     // }
 
+    // "location,Do"
+    string temp("");
     for (size_t i = 0; i < s.size(); i++) {
       if (is_punctuation(s[i])) {
-        s[i] = ' ';
+        if (temp.size() != 0)
+          str_map[temp]++;
+        temp.clear();
         continue;
       }
 
-      s[i] = tolower(s[i]);
+      temp += tolower(s[i]);
     }
+    if (temp.size() != 0)
+      str_map[temp]++;
 
-    // "abc edg"
-
-    istringstream ss(s);
-    istream &t = ss;
-
-    while (t >> s)
-      str_map[s]++;
+    // "location do"
+    // istringstream ss(s);
+    // while (ss >> s)
+    //   str_map[s]++;
 
     // cout << s << endl;
   }
 
-  // for (const pair<string, int> &item : str_map) {
-  //   cout << item.first << ": " << item.second << endl;
-  // }
-
-  for (auto it = str_map.begin(); it != str_map.end(); ++it) {
-    cout << it->first << ": " << (*it).second << endl;
+  for (auto item : str_map) {
+    cout << item.first << ": " << item.second << endl;
   }
+
+  // for (auto it = str_map.begin(); it != str_map.end(); ++it) {
+  //   cout << it->first << ": " << (*it).second << endl;
+  // }
 }
 
 int main() {
   input();
-  map<string, int> strMap; // 统计结果
-
-  string line;
-  while (getline(cin, line)) { // 每次读取一行
-    // 遍历读入的一行字符，修改其中符号和大小写
-    for (string::iterator it = line.begin(); it != line.end(); ++it) {
-      if (is_punctuation(*it))
-        *it = ' ';
-      *it = (isupper(*it) ? tolower(*it) : *it);
-    }
-
-    istringstream strStream(
-        line); // 将读入的字符串转换成字符串流，再逐个提取其中的单词
-    string temp;
-    while (strStream >> temp)
-      ++strMap[temp]; // 单词计数
-  }
-
-  for (pair<string, int> item : strMap) {
-    cout << item.first << ": " << item.second << endl;
-  }
 
   return 0;
 }
