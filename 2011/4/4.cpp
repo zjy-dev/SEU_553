@@ -1,5 +1,9 @@
-﻿#include <iostream>
+﻿#include <bits/stdc++.h>
 using namespace std;
+
+// string arr1[10]
+// (const char*) arr2[10]
+// (int        ) arr3[10]
 
 void sortOne(string str[], int n) { // 插入排序
   string val;
@@ -8,8 +12,12 @@ void sortOne(string str[], int n) { // 插入排序
 
     // 往有序序列中插入一个新的值
     int j = i;
+    // if (val < str[j - 1])
+    // 如果用 char *, if (strcmp(val, str[j - 1]) < 0)
     while (j > 0 && val < str[j - 1]) {
       str[j] = str[j - 1];
+
+      // strcmp(s1, s2);
       --j;
     }
     str[j] = val;

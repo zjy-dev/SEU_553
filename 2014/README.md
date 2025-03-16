@@ -15,8 +15,6 @@ int main()
 {
     int p = 10;
 
-    // 野指针, 它的指向没人知道
-    // in the wild
     int * ptr;
     f(ptr);
     
@@ -61,17 +59,15 @@ void fun(int i, int j, int *a) {
     *a = j - i;
 }
 
-int main()
-{
+int main() {
     int a, b, c;
-    // -11, @, @
+    // -11, ?, ?
     fun(20, 9, &a);
-
-    // -11, -20, @
+    // -11, -20, ?
     fun(9, a, &b);
-
     // -11, -20, -9
     fun(a, b, &c);
+
     cout << a << "," << b << "," << c << endl;
 
     return 0;
@@ -86,46 +82,35 @@ int main()
 #include <iostream>
 using namespace std;
 
-class A
-{
+class A {
 public:
-    // 多态
-    virtual void print() {
-        cout << "A::print" << endl;
-    }
+  // 多态
+  virtual void print() { cout << "A::print" << endl; }
 };
 
-class B: public A
-{
+class B : public A {
 public:
-    void print()
-    {
-        cout << "B::print" << endl;
-    }
+  void print() { cout << "B::print" << endl; }
 };
 
-class C: public B
-{
+class C : public B {
 public:
-    void print() {
-        cout << "C::print" << endl;
-    }
+  void print() { cout << "C::print" << endl; }
 };
 
-int main()
-{
-    B b;
-    C c;
-    A* a;
-    a = &c;
-    a->print();
-    a = &b;
-    a->print();
+int main() {
+  B b;
+  C c;
+  A *a;
+  a = &c;
+  a->print(); // C
+  a = &b;
+  a->print(); // B
 
-    B *pb = &c;
-    (*pb).print();
+  B *pb = &c;
+  (*pb).print(); // C
 
-    return 0;
+  return 0;
 }
 ```
 

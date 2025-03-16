@@ -51,7 +51,7 @@ p = a0 + a1*x + a2*x^2 + a3*x^3 + ……… + an*x^n
 > Vehicle类中需要有速度的成员及相关操作，Car类、teeringWheel类和Brake 类中需要有部分属性名字。
 
 ```cpp
-class Car {
+class Car: public Vehicle {
 private:
     // 变长数组
     // vector<StringWheel> v;

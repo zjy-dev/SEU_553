@@ -17,6 +17,6 @@ int main() {
 
   cout << strtok(nullptr, "\0") << ' '; // 987
   // cout << strtok(nullptr, "");   // 987
-  cout << (strtok(nullptr, "") == nullptr); // 987
+  // cout << (strtok(nullptr, "") == nullptr); // 987
   return 0;
 }

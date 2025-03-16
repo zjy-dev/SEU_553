@@ -32,6 +32,9 @@ void find_saddle_points(const vector<vector<int>> &arr) {
 }
 
 int main() {
+  // 03 08 07
+  // 09 11 13
+  // 15 16 17
   vector<vector<int>> matrix = {{3, 8, 7}, {9, 11, 13}, {15, 16, 17}};
 
   find_saddle_points(matrix);

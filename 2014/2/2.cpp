@@ -2,39 +2,34 @@
 using namespace std;
 
 char *int_to_str(int a) {
-
-  // 123 -> "123"
-  // -123 -> "-123"
-  // 考试多用 三目
+  // '-' 不需要'+'
+  // new 多少长度?
+  // 考试多用三目和 ','
+  // 平时编程恰恰相反
   size_t len = a < 0 ? 1 : 0;
 
-  int t(a);
-  while (t) {
-    // 考试多用',', 少换行
-    t /= 10, len++;
-  }
+  int temp = a;
+  while (temp)
+    temp /= 10, len++;
 
-  // a 的十进制位数 + 1(\0)
-  // 堆区
+  // 运行时在堆区动态分配空间, new 出来的空间全是 0 == '\0'
+  // s[len] == '\0'
   char *s = new char[len + 1];
-  if (a < 0)
-    s[0] = '-';
-  a = abs(a);
-  s[len] = '\0';
+  s[len] = '\0', s[0] = '-';
 
-  // 填充 s
-  for (int i = len - 1; a; i--)
-    s[i] = '0' + (a % 10), a /= 10;
+  // 分配好了, 塞数据
+  temp = a > 0 ? a : -a; // 尽量别动形参, 你不知道最后会不会用到!!!
+  for (size_t i = len - 1; temp; i--)
+    s[i] = temp % 10 + '0', temp /= 10;
 
   return s;
 }
 
 int main() {
   char *p = int_to_str(-12345);
+  cout << p << endl, delete[] p;
 
-  cout << p << endl;
-  delete[] p, p = int_to_str(12345);
-  cout << p << endl;
-  delete[] p;
+  p = int_to_str(12345);
+  cout << p << endl, delete[] p;
   return 0;
 }
