@@ -5,7 +5,7 @@
 ## 1. 判断闰年。
 ```cpp
 bool is_leap(unsigned year) {
-    return (year % 400 == 0) || (year % 100 != 0 && year % d == 0);
+    return (year % 400 == 0) || (year % 100 != 0 && year % 4 == 0);
 }
 ```
 ## 2. 读一行字符串到字符数组。

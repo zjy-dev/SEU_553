@@ -6,57 +6,51 @@ void findRepStr(char str[], const char findStr[], const char replaceStr[]) {
   size_t len = strlen(str), findstr_len = strlen(findStr),
          replacestr_len = strlen(replaceStr);
 
-  char *new_str = new char[len + findstr_len + replacestr_len];
+  vector<size_t> v;
 
-  size_t find_pos = -1;
-  for (size_t i = 0; i < len - findstr_len + 1; i++) {
-    // 从 i 开始的子字符串是否等于 finsStr
-    bool find = true;
-    for (size_t j = 0; j < findstr_len; j++) {
-      if (str[i + j] != findStr[j]) {
-        find = false;
-        break;
-      }
-    }
-
-    if (!find) {
-      new_str[i] = str[i];
-      continue;
-    }
-
-    find_pos = i;
-    break;
+  for (size_t i = 0; i <= len - findstr_len; i++) {
+    bool found = true;
+    for (size_t j = 0; j < findstr_len; j++)
+      if (str[i + j] != findStr[j])
+        found = false;
+    if (found)
+      v.push_back(i);
   }
 
-  if (find_pos == -1) {
-    cout << str << endl;
-    return;
+  // 我要这个完整的字符串, \0 呢????
+  char ans[len + v.size() * (replacestr_len - findstr_len) + 1];
+  ans[len + v.size() * (replacestr_len - findstr_len)] = '\0';
+
+  // 3 5 8
+  // for (size_t i = 0; i < v.size(); i++) {
+  //   auto pos = v[i];
+  // }
+  // for (auto pos : v) {
+  // }
+  size_t ori_pos = 0, ans_pos = 0;
+  for (auto pos : v) {
+    while (ori_pos < pos)
+      ans[ans_pos++] = str[ori_pos++];
+
+    for (size_t i = 0; i < replacestr_len; i++)
+      ans[ans_pos++] = replaceStr[i];
+
+    ori_pos += findstr_len;
   }
 
-  for (size_t i = 0; i < replacestr_len; i++) {
-    new_str[find_pos + i] = replaceStr[i];
-  }
+  while (ori_pos < len)
+    ans[ans_pos++] = str[ori_pos++];
 
-  size_t last_pos = -1;
-  for (size_t i = 0; i < len - (find_pos + findstr_len); i++) {
-    new_str[find_pos + replacestr_len + i] = str[find_pos + findstr_len + i];
-    last_pos = find_pos + replacestr_len + i;
-  }
+  assert(ans_pos == len + v.size() * (replacestr_len - findstr_len));
 
-  // 本质上是因为没加法
-  // string 的 +
-
-  new_str[last_pos + 1] = '\0';
-  cout << new_str << endl;
-
-  string s;
+  cout << ans << endl;
 }
 
 int main() {
-  char str[] = "Gao m za Enza za acsdf";
+  char str[] = "Gao m za Enza za acsdfza";
   char findStr[] = "za";
   char replaceStr[] = "Van";
-
+  // "Gao m Van Enza Van acsdf";
   findRepStr(str, findStr, replaceStr);
   return 0;
 }

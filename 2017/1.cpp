@@ -19,9 +19,9 @@ int main() {
     exit(1);
   }
 
-  const char *month_map[] = {
-      "",     "January", "February",  "March",   "April",    "May",     "June",
-      "July", "August",  "September", "October", "November", "December"};
+  string month_map[] = {"January",   "February", "March",    "April",
+                        "May",       "June",     "July",     "August",
+                        "September", "October",  "November", "December"};
 
   string line;
   while (getline(ifs, line)) {

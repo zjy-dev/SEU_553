@@ -2,84 +2,89 @@
 using namespace std;
 
 bool is_punctuation(char ch) {
-  return (ch == ',' || ch == '.' || ch == '!' || ch == '?' || ch == ' ');
+  return (ch == ',' || ch == '.' || ch == '!' || ch == '?');
 }
 
-// bool isupper();
-// bool islower();
+char my_tolower(char c) {
+  if (c >= 'A' && c <= 'Z')
+    return (c - 'A') + 'a';
 
-// char tolower(char c) {
-//   if (islower(c)) {
-//     return c;
-//   }
-
-//   if (c < 'A' or c > 'Z')
-//     throw logic_error("Not A alpha");
-
-//   return 'a' + (c - 'A');
-// }
+  return c;
+}
 
 void input() {
-  // 哈希表
-  // "string" -> any
-  // idx = hash(输入) % n
-
-  // 按照 key 升序排序的哈希表
-  map<string, int> str_map;
-  // kv: key-value
-  // pair<string, int>
-  // pair.first, pair.second
-
+  ifstream ifs("input.txt");
   string s;
-  // cin >> 跳过 ' ' \n
-  while (cin >> s) {
-    if (s.size() == 1 && is_punctuation(s[0]))
-      continue;
-
-    // "abcde";
-    // for (string::iterator it = s.begin(); it != s.end(); it++) {
-    //   if (is_punctuation(*it)) {
-    //     *it = ' ';
-    //     continue;
-    //   }
-
-    //   *it = tolower(*it);
-    // }
-
-    // "location,Do"
+  // hash(任何类型的key) -> 哈希值 -> 具体的表项(任何类型的val)
+  map<string, unsigned> m; // 按 key 升序排列
+  while (ifs >> s) {
+    // abc
+    // ,abc
+    // abc,def
     string temp("");
     for (size_t i = 0; i < s.size(); i++) {
-      if (is_punctuation(s[i])) {
-        if (temp.size() != 0)
-          str_map[temp]++;
-        temp.clear();
+      if (!is_punctuation(s[i])) {
+        temp += my_tolower(s[i]);
         continue;
       }
 
-      temp += tolower(s[i]);
+      if (temp.size() == 0)
+        continue;
+
+      // 统计次数
+      m[temp]++;
+
+      temp.clear();
     }
-    if (temp.size() != 0)
-      str_map[temp]++;
 
-    // "location do"
-    // istringstream ss(s);
-    // while (ss >> s)
-    //   str_map[s]++;
-
-    // cout << s << endl;
+    if (temp.size())
+      m[temp]++;
   }
 
-  for (auto item : str_map) {
+  ifs.close();
+
+  // 打印结果
+  for (const pair<string, unsigned> &item : m)
     cout << item.first << ": " << item.second << endl;
+}
+
+void input2() {
+  // i string stream
+  // i f      stream
+  ifstream ifs("input.txt");
+  string s;
+  map<string, unsigned> m;
+
+  while (ifs >> s) {
+    // abc
+    // ,abc
+    // abc def
+    for (size_t i = 0; i < s.size(); i++) {
+      if (is_punctuation(s[i]))
+        s[i] = ' ';
+      s[i] = my_tolower(s[i]);
+    }
+
+    istringstream iss(s);
+    string temp;
+    while (iss >> temp)
+      m[temp] += 1;
   }
 
-  // for (auto it = str_map.begin(); it != str_map.end(); ++it) {
-  //   cout << it->first << ": " << (*it).second << endl;
-  // }
+  ifs.close();
+
+  // 打印结果
+  for (const pair<string, unsigned> &item : m)
+    cout << item.first << ": " << item.second << endl;
+}
+
+void input3() {
+  // TODO: strtok实现
 }
 
 int main() {
-  input();
+  // input();
+  input2();
 
   return 0;
 }

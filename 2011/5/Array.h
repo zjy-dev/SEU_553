@@ -45,6 +45,7 @@ template <typename T> Array<T>::Array(const Array<T> &a) {
   }
 }
 
+// arr[3]++;
 template <typename T> T &Array<T>::operator()(int r, int c) {
   if (r >= row || c >= col) {
     std::cerr << "Out of range" << std::endl;
